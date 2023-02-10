@@ -1,5 +1,7 @@
+import 'package:finalapp/Admin/my_drawer_header.dart';
 import 'package:finalapp/Admin/pages/dashboard.dart';
 import 'package:finalapp/Admin/pages/interview.dart';
+import 'package:finalapp/Admin/pages/logout.dart';
 import 'package:finalapp/Admin/pages/massEmail.dart';
 import 'package:finalapp/Admin/pages/reportsAnalysis.dart';
 import 'package:finalapp/Admin/pages/sendNotification.dart';
@@ -7,7 +9,12 @@ import 'package:finalapp/Admin/pages/settings.dart';
 import 'package:finalapp/Admin/pages/supportAssistence.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:Admin/pages/dashboard.dart';
+
+
+// import 'package:admin/pages/logout.dart';
+
+
+// import 'package:admin/pages/dashboard.dart';
 // import 'package:admin/pages/interview.dart';
 // import 'package:admin/pages/massEmail.dart';
 // import 'package:admin/my_drawer_header.dart';
@@ -15,8 +22,6 @@ import 'package:flutter/material.dart';
 // import 'package:admin/pages/sendNotification.dart';
 // import 'package:admin/pages/settings.dart';
 // import 'package:admin/pages/supportAssistence.dart';
-
-import 'my_drawer_header.dart';
 
 
 void main() {
@@ -31,37 +36,39 @@ class Admin extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: HomePage_a(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomePage_a extends StatefulWidget {
+  const HomePage_a({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage_a> createState() => _HomePageState_a();
 }
 
-class _HomePageState extends State<HomePage> {
-  var currentPage = DrawerSections.dashboard;
+class _HomePageState_a extends State<HomePage_a> {
+  var currentPage = DrawerSections_a.dashboard;
   @override
   Widget build(BuildContext context) {
     var container;
-    if (currentPage == DrawerSections.dashboard) {
-      container = DashboardPage();
-    } else if (currentPage == DrawerSections.interview) {
-      container = InterviewPage();
-    } else if (currentPage == DrawerSections.sendNotification) {
-      container = SendNotificationPage();
-    } else if (currentPage == DrawerSections.massEmail) {
-      container = MassEmailPage();
-    } else if (currentPage == DrawerSections.reportsAnalysis) {
-      container = ReportsAnalysisPage();
-    } else if (currentPage == DrawerSections.settings) {
-      container = SettingsPage();
-    } else if (currentPage == DrawerSections.supportAssistence) {
-      container = SupportAssistencePage();
+    if (currentPage == DrawerSections_a.dashboard) {
+      container = DashboardPage_a();
+    } else if (currentPage == DrawerSections_a.interview) {
+      container = InterviewPage_a();
+    } else if (currentPage == DrawerSections_a.sendNotification) {
+      container = SendNotificationPage_a();
+    } else if (currentPage == DrawerSections_a.massEmail) {
+      container = MassEmailPage_a();
+    } else if (currentPage == DrawerSections_a.reportsAnalysis) {
+      container = ReportsAnalysisPage_a();
+    } else if (currentPage == DrawerSections_a.settings) {
+      container = SettingsPage_a();
+    } else if (currentPage == DrawerSections_a.supportAssistence) {
+      container = SupportAssistencePage_a();
+    } else if (currentPage == DrawerSections_a.logout){
+      container = LogoutPage_a();
     }
 
     return Scaffold(
@@ -74,7 +81,7 @@ class _HomePageState extends State<HomePage> {
       drawer: Drawer(
         child: Container(
           child: Column(
-            children: [const MyHeaderDrawer(), MyDrawerList()],
+            children: [const MyHeaderDrawer_a(), MyDrawerList()],
           ),
         ),
       ),
@@ -89,21 +96,23 @@ class _HomePageState extends State<HomePage> {
         //shows the list of menu drawer
         children: [
           menuItem(1, "Dashboard", Icons.dashboard,
-              currentPage == DrawerSections.dashboard ? true : false),
+              currentPage == DrawerSections_a.dashboard ? true : false),
           menuItem(2, "Interview", Icons.integration_instructions,
-              currentPage == DrawerSections.interview ? true : false),
+              currentPage == DrawerSections_a.interview ? true : false),
           menuItem(3, "Send Notification", Icons.notifications,
-              currentPage == DrawerSections.sendNotification ? true : false),
+              currentPage == DrawerSections_a.sendNotification ? true : false),
           Divider(),
           menuItem(4, "Mass Email", Icons.email,
-              currentPage == DrawerSections.massEmail ? true : false),
+              currentPage == DrawerSections_a.massEmail ? true : false),
           menuItem(5, "Reports & Analysis", Icons.analytics,
-              currentPage == DrawerSections.reportsAnalysis ? true : false),
+              currentPage == DrawerSections_a.reportsAnalysis ? true : false),
           Divider(),
           menuItem(6, "Settings", Icons.settings_outlined,
-              currentPage == DrawerSections.settings ? true : false),
+              currentPage == DrawerSections_a.settings ? true : false),
           menuItem(7, "Support & assistence", Icons.contact_support,
-              currentPage == DrawerSections.supportAssistence ? true : false),
+              currentPage == DrawerSections_a.supportAssistence ? true : false),
+          menuItem(8, "Logout", Icons.logout,
+              currentPage == DrawerSections_a.logout ? true : false),
         ],
       ),
     );
@@ -117,19 +126,21 @@ class _HomePageState extends State<HomePage> {
           Navigator.pop(context);
           setState(() {
             if (id == 1) {
-              currentPage = DrawerSections.dashboard;
+              currentPage = DrawerSections_a.dashboard;
             } else if (id == 2) {
-              currentPage = DrawerSections.interview;
+              currentPage = DrawerSections_a.interview;
             } else if (id == 3) {
-              currentPage = DrawerSections.sendNotification;
+              currentPage = DrawerSections_a.sendNotification;
             } else if (id == 4) {
-              currentPage = DrawerSections.massEmail;
+              currentPage = DrawerSections_a.massEmail;
             } else if (id == 5) {
-              currentPage = DrawerSections.reportsAnalysis;
+              currentPage = DrawerSections_a.reportsAnalysis;
             } else if (id == 6) {
-              currentPage = DrawerSections.settings;
+              currentPage = DrawerSections_a.settings;
             } else if (id == 7) {
-              currentPage = DrawerSections.supportAssistence;
+              currentPage = DrawerSections_a.supportAssistence;
+            } else if (id == 8){
+              currentPage = DrawerSections_a.logout;
             }
           });
         },
@@ -155,18 +166,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-/*
-enum DrawerSections {
-  dashboard,
-  FAQs,
-  profile_update,
-  settings,
-  notification,
-  privacy_policy,
-  send_feedback
-}*/
 
-enum DrawerSections {
+
+enum DrawerSections_a {
   dashboard,
   interview,
   sendNotification,
@@ -174,6 +176,7 @@ enum DrawerSections {
   reportsAnalysis,
   settings,
   supportAssistence,
+  logout
 
 }
 

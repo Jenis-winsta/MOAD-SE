@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class MyHeaderDrawer extends StatefulWidget {
-  const MyHeaderDrawer({super.key});
+class MyHeaderDrawer_a extends StatefulWidget {
+  const MyHeaderDrawer_a({super.key});
 
   @override
-  State<MyHeaderDrawer> createState() => _MyHeaderDrawerState();
+  State<MyHeaderDrawer_a> createState() => _MyHeaderDrawerState_a();
 }
 
-class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
+class _MyHeaderDrawerState_a extends State<MyHeaderDrawer_a> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,15 +25,17 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
               //see the changes in the network image
               //do a different way for profile image
               image: const DecorationImage(
-                  image: NetworkImage(
-                      "https://cdn5.vectorstock.com/i/1000x1000/72/74/female-avatar-profile-icon-round-woman-face-vector-18307274.jpg"),
-                  fit: BoxFit.scaleDown)),
+                  image: AssetImage("assets/logo.png"),
+                  //NetworkImage("https://cdn5.vectorstock.com/i/1000x1000/72/74/female-avatar-profile-icon-round-woman-face-vector-18307274.jpg"),
+                  fit: BoxFit.scaleDown
+                  )
+                ),
         ),
         const Text(
           "ALpha Tech",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
-        Text("info@alphatech.dev",
+        Text("infoalphatech75@gmail.com",
             style: TextStyle(color: Colors.grey[200], fontSize: 14)),
       ]),
     );

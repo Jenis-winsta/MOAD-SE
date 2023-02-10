@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LogoutPage extends StatelessWidget {
-  const LogoutPage({super.key});
+class LogoutPage_a extends StatelessWidget {
+  const LogoutPage_a({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class MassEmailPage extends StatelessWidget {
+class MassEmailPage_a extends StatelessWidget {
   //const DashboardPage({super.key});
 
 

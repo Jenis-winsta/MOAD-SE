@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage_a extends StatelessWidget {
   //const DashboardPage({super.key});
 
 
