@@ -17,16 +17,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-    TextEditingController emailTEC = TextEditingController();
+    TextEditingController usernameTEC = TextEditingController();
   TextEditingController passwordTEC= TextEditingController();
   bool isRememberMe = false;
 
-  Widget buildEmail() {
+  Widget buildUsername() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          'Email',
+          'Username',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
@@ -42,14 +42,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ]),
           height: 60,
           child: TextField(
-            controller: emailTEC,
-            keyboardType: TextInputType.emailAddress,
+            controller: usernameTEC,
+            // keyboardType: TextInputType.usernameAddress,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(top: 14),
-                prefixIcon: Icon(Icons.email, color: Color(0xffC468F9)),
-                hintText: 'Email',
+                prefixIcon: Icon(Icons.person, color: Color(0xffC468F9)),
+                hintText: 'Username',
                 hintStyle: TextStyle(color: Colors.black38)),
           ),
         )
@@ -144,19 +144,19 @@ class _LoginScreenState extends State<LoginScreen> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           backgroundColor: Color.fromARGB(255, 127, 7, 148),
-          padding: const EdgeInsets.all(17),
+          padding: const EdgeInsets.all(25),
           shadowColor: Colors.white,
         ),
         
         onPressed: () {
-           var _email = emailTEC.text;
+           var _username = usernameTEC.text;
           var _pass = passwordTEC.text;
-          if (_email == 'jenis'&& _pass=='jenis') {
+          if (_username == 'jenis'&& _pass=='jenis') {
             print("user");
             Navigator.push(
               context, MaterialPageRoute(builder: (context) => User()));
             
-          } else if (_email == 'admin' && _pass=='admin') {
+          } else if (_username == 'admin' && _pass=='admin') {
             print("admin");
             Navigator.push(
               context, MaterialPageRoute(builder: (context) => Admin()));
@@ -167,8 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
           print('Login Pressed');
           //User();
           
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => User()));
+          // Navigator.push(
+          //     context, MaterialPageRoute(builder: (context) => User()));
         },
         child: const Text(
           'LOGIN',
@@ -244,7 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 50),
-                      buildEmail(),
+                      buildUsername(),
                       const SizedBox(height: 20),
                       buildPassword(),
                       buildForgotPassBtn(),
