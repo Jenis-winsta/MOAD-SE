@@ -25,7 +25,7 @@ class _MyHeaderDrawerState_a extends State<MyHeaderDrawer_a> {
               //see the changes in the network image
               //do a different way for profile image
               image: const DecorationImage(
-                  image: AssetImage("assets/logo.png"),
+                  image: AssetImage("assets/logo1.png"),
                   //NetworkImage("https://cdn5.vectorstock.com/i/1000x1000/72/74/female-avatar-profile-icon-round-woman-face-vector-18307274.jpg"),
                   fit: BoxFit.scaleDown
                   )

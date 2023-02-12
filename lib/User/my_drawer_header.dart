@@ -25,15 +25,15 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
               //see the changes in the network image
               //do a different way for profile image
               image: const DecorationImage(
-                  image: NetworkImage(
-                      "https://cdn5.vectorstock.com/i/1000x1000/72/74/female-avatar-profile-icon-round-woman-face-vector-18307274.jpg"),
+                  image: AssetImage('assets/girl.png'),
+                  //NetworkImage("https://cdn5.vectorstock.com/i/1000x1000/72/74/female-avatar-profile-icon-round-woman-face-vector-18307274.jpg")
                   fit: BoxFit.scaleDown)),
         ),
         const Text(
-          "ALpha Tech",
+          "Jenis Winsta",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
-        Text("info@alphatech.dev",
+        Text("jeniswinsta14@gmail.com",
             style: TextStyle(color: Colors.grey[200], fontSize: 14)),
       ]),
     );

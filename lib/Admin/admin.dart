@@ -11,17 +11,7 @@ import 'package:flutter/material.dart';
 
 
 
-// import 'package:admin/pages/logout.dart';
 
-
-// import 'package:admin/pages/dashboard.dart';
-// import 'package:admin/pages/interview.dart';
-// import 'package:admin/pages/massEmail.dart';
-// import 'package:admin/my_drawer_header.dart';
-// import 'package:admin/pages/reportsAnalysis.dart';
-// import 'package:admin/pages/sendNotification.dart';
-// import 'package:admin/pages/settings.dart';
-// import 'package:admin/pages/supportAssistence.dart';
 
 
 void main() {
