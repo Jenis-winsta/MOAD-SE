@@ -21,10 +21,10 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      // title: 'Flutter Demo',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.purple,
-      // ),
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       home: EditProfileUI(),
     );
   }
@@ -88,9 +88,10 @@ class _EditProfileUIState extends State<EditProfileUI> {
                         shape: BoxShape.circle,
                         image: const DecorationImage(
                           fit: BoxFit.cover, 
-                          image: NetworkImage(
-                            'https://www.mumbailive.com/images/news/images_1532592130426_xavier_final.jpg?bg=c59f71&crop=1368%2C768%2C0%2C-0.07709252015859094&fit=fill&fitToScale=w%2C1368%2C768&fm=webp&h=768&height=768&w=1368&width=1368'
-                          ),
+                          image: AssetImage('assets/girl.png'),
+                          // NetworkImage(
+                          //   'https://www.mumbailive.com/images/news/images_1532592130426_xavier_final.jpg?bg=c59f71&crop=1368%2C768%2C0%2C-0.07709252015859094&fit=fill&fitToScale=w%2C1368%2C768&fm=webp&h=768&height=768&w=1368&width=1368'
+                          // ),
 
                         )
                       )

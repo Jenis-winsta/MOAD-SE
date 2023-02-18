@@ -17,6 +17,9 @@ class Login extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Login UI',
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       home: LoginScreen(),
     );
   }
