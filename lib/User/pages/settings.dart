@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_settings/app_settings.dart';
 
 class SettingsPage extends StatelessWidget {
-  //const DashboardPage({super.key});
+  // const DashboardPage({super.key});
 
   var title = ['Device Settings', 'Notifications', 'App Settings'];
   var icon = [
