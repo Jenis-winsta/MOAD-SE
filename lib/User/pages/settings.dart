@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:app_settings/app_settings.dart';
 
-class SettingsPage extends StatelessWidget {
-  // const DashboardPage({super.key});
+class SettingsPage extends StatefulWidget {
 
+  SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  // const DashboardPage({super.key});
   var title = ['Device Settings', 'Notifications', 'App Settings'];
+
   var icon = [
     Icons.app_settings_alt,
     Icons.admin_panel_settings,
     Icons.circle_notifications
   ];
 
-  SettingsPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
