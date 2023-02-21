@@ -10,6 +10,8 @@ class SettingsPage extends StatelessWidget {
     Icons.admin_panel_settings,
     Icons.circle_notifications
   ];
+
+  SettingsPage({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
