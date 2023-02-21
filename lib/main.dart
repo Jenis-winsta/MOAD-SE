@@ -1,6 +1,6 @@
-import 'dart:async';
-import 'dart:html';
-
+import 'package:finalapp/LoginScreen/login.dart';
+// import 'package:finalapp/User/user.dart';
+// import 'package:finalapp/Admin/admin.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,21 +12,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SplashScreen(),
-    );
-  }
-}
-
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
-
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
-
-class _SplashScreenState extends State<SplashScreen> {
-
+    return const MaterialApp(
+      // home: Admin(),
+      home: Login(),
+      debugShowCheckedModeBanner: false,
 
   @override
   void initState() {
@@ -61,21 +50,4 @@ class Homepage extends StatefulWidget {
 
   @override
   State<Homepage> createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.purple,
-        title: Text("Title of the app"),
-      ),
-      body: Container(
-        child: Center(
-          child: Text("Homepage"),
-        )
-      ),
-    );
-  }
 }
