@@ -17,7 +17,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-    TextEditingController usernameTEC = TextEditingController();
+  TextEditingController usernameTEC = TextEditingController();
   TextEditingController passwordTEC= TextEditingController();
   bool isRememberMe = false;
 
