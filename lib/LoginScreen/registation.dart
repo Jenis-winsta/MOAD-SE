@@ -68,7 +68,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         FirebaseFirestore.instance.collection("user").doc(username);
 
     //Map
-    Map<String, dynamic> myPets = {
+    Map<String, dynamic> userinfo = {
       "Name": name,
       "id": id,
       "mobile": mobile,
@@ -79,7 +79,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // "Email address": emailAddress,
     };
 
-    documentReference.set(myPets).whenComplete(() {
+    documentReference.set(userinfo).whenComplete(() {
       if (kDebugMode) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
