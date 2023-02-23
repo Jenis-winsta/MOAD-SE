@@ -1,9 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:finalapp/Admin/admin.dart';
 import 'package:finalapp/Admin_Web/admin_web.dart';
+import 'package:finalapp/LoginScreen/registation.dart';
+import 'package:flutter/foundation.dart';
+// import 'package:finalapp/LoginScreen/login_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../User/user.dart';
+import 'package:finalapp/User/user.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,10 +24,69 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  // static Future<User?> loginUsingEmailPassword()
+
+
+
+
+
+  login1(String username,String password){
+    print(username);
+    print(password);
+
+    CollectionReference colref=
+        FirebaseFirestore.instance.collection('user');
+
+    Map<String,dynamic> user_map={
+      "name":username,
+      "password":password,
+      "username":username,
+    };
+
+    colref
+          .add(user_map)
+          .then((value) => print("user added"))
+          .catchError((error)=>print("Failed to add user: $username"));
+
+  }
+  login(String username,String password){
+    
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("user").doc(username);
+
+    // DocumentReference documentReference =
+    //     FirebaseFirestore.instance.collection("Pets").doc(petName);
+    documentReference.get().then((datasnapshot) {
+      if (kDebugMode) {
+        print(datasnapshot.data());
+      }
+      else{
+        print("error");
+      }
+    });
+
+  }
+
+
+
+
+
+
+
   TextEditingController usernameTEC = TextEditingController();
   TextEditingController passwordTEC = TextEditingController();
   bool isRememberMe = false;
   bool _obscureText = true;
+  // static login(){
+  //   DocumentReference documentReference =
+  //       FirebaseFirestore.instance.collection("Pets").doc(petName);
+  //   documentReference.get().then((datasnapshot) {
+  //     if (kDebugMode) {
+  //       print(datasnapshot.data());
+  //     }
+  //   }
+  //   );
+  // }
 
   Widget buildUsername() {
     return Column(
@@ -46,8 +111,8 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             controller: usernameTEC,
             // keyboardType: TextInputType.usernameAddress,
-            style: TextStyle(color: Colors.black87),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black87),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(top: 14),
                 prefixIcon: Icon(Icons.person, color: Color(0xffC468F9)),
@@ -82,14 +147,13 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             controller: passwordTEC,
             obscureText: _obscureText,
-            // obscureText: true,
-            style: TextStyle(color: Colors.black87),
+            style: const TextStyle(color: Colors.black87),
             decoration: InputDecoration(
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14),
-              prefixIcon: Icon(Icons.lock, color: Color(0xffC468F9)),
+              contentPadding: const EdgeInsets.only(top: 14),
+              prefixIcon: const Icon(Icons.lock, color: Color(0xffC468F9)),
               hintText: 'Password',
-              hintStyle: TextStyle(color: Colors.black38),
+              hintStyle: const TextStyle(color: Colors.black38),
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscureText ? Icons.visibility_off : Icons.visibility,
@@ -157,24 +221,26 @@ class _LoginScreenState extends State<LoginScreen> {
           // backgroundColor: Colors.white,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
-          backgroundColor: Color.fromARGB(255, 127, 7, 148),
+          backgroundColor: const Color.fromARGB(255, 127, 7, 148),
           padding: const EdgeInsets.all(25),
           shadowColor: Colors.white,
         ),
         onPressed: () {
           var _username = usernameTEC.text;
           var _pass = passwordTEC.text;
+          login(_username,_pass);
+          // LoginFirebase(_username,_pass);
           if (_username == 'jenis' && _pass == 'jenis') {
             print("user");
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => User()));
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => const User()));
           } else if (_username == 'adminm' && _pass == 'adminm') {
             print("admin");
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Admin()));
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => const Admin()));
           } else if (_username == 'admin' && _pass == 'admin') {
             print("admin");
-            Navigator.push(
+            Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => Admin_Web()));
           } else {
             print("error");
@@ -201,7 +267,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget buildSignUpBtn() {
     return GestureDetector(
-      onTap: (() => print("Sign Up Pressed")),
+      // onTap: (() => print("Sign Up Pressed")),
+      onTap: (){
+        print("sign up");
+        Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Registration()));
+        // Registration();
+
+      },
       child: RichText(
         text: const TextSpan(children: [
           TextSpan(
