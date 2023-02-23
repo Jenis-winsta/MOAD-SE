@@ -1,4 +1,5 @@
 import 'package:finalapp/Admin/admin.dart';
+import 'package:finalapp/Admin_Web/admin_web.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -18,8 +19,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController usernameTEC = TextEditingController();
-  TextEditingController passwordTEC= TextEditingController();
+  TextEditingController passwordTEC = TextEditingController();
   bool isRememberMe = false;
+  bool _obscureText = true;
 
   Widget buildUsername() {
     return Column(
@@ -79,14 +81,26 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 60,
           child: TextField(
             controller: passwordTEC,
-            obscureText: true,
+            obscureText: _obscureText,
+            // obscureText: true,
             style: TextStyle(color: Colors.black87),
             decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(top: 14),
-                prefixIcon: Icon(Icons.lock, color: Color(0xffC468F9)),
-                hintText: 'Password',
-                hintStyle: TextStyle(color: Colors.black38)),
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14),
+              prefixIcon: Icon(Icons.lock, color: Color(0xffC468F9)),
+              hintText: 'Password',
+              hintStyle: TextStyle(color: Colors.black38),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureText ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureText = !_obscureText;
+                  });
+                },
+              ),
+            ),
           ),
         )
       ],
@@ -147,26 +161,27 @@ class _LoginScreenState extends State<LoginScreen> {
           padding: const EdgeInsets.all(25),
           shadowColor: Colors.white,
         ),
-        
         onPressed: () {
-           var _username = usernameTEC.text;
+          var _username = usernameTEC.text;
           var _pass = passwordTEC.text;
-          if (_username == 'jenis'&& _pass=='jenis') {
+          if (_username == 'jenis' && _pass == 'jenis') {
             print("user");
             Navigator.push(
-              context, MaterialPageRoute(builder: (context) => User()));
-            
-          } else if (_username == 'admin' && _pass=='admin') {
+                context, MaterialPageRoute(builder: (context) => User()));
+          } else if (_username == 'adminm' && _pass == 'adminm') {
             print("admin");
             Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Admin()));
-          }
-          else{
+                context, MaterialPageRoute(builder: (context) => Admin()));
+          } else if (_username == 'admin' && _pass == 'admin') {
+            print("admin");
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Admin_Web()));
+          } else {
             print("error");
           }
           print('Login Pressed');
           //User();
-          
+
           // Navigator.push(
           //     context, MaterialPageRoute(builder: (context) => User()));
         },

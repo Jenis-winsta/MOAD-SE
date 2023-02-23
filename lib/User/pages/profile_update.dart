@@ -167,8 +167,13 @@ class _EditProfileUIState extends State<EditProfileUI> {
         decoration: InputDecoration(
           suffixIcon: isPassWordTextField?
             IconButton(
-              icon: Icon(Icons.remove_red_eye, color: Colors.grey),
-              onPressed: (){}, 
+              icon: Icon(
+                isObscurePassword? Icons.visibility_off:Icons.visibility, color: Colors.purple),
+              onPressed: (){
+                setState(() {
+              isObscurePassword = !isObscurePassword;
+            });
+              }, 
             ): null,
           contentPadding: EdgeInsets.only(bottom: 5),
           labelText: labelText,
