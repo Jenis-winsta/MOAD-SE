@@ -1,4 +1,5 @@
 import 'package:finalapp/User/pages/logout.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finalapp/User/my_drawer_header.dart';
 import 'package:finalapp/User/pages/Dashboard/dashboard.dart';
@@ -10,11 +11,11 @@ import 'package:finalapp/User/pages/profile_update.dart';
 import 'package:finalapp/User/pages/settings.dart';
 
 void main() {
-  runApp(const User());
+  runApp(const as_User());
 }
 
-class User extends StatelessWidget {
-  const User({super.key});
+class as_User extends StatelessWidget {
+  const as_User({super.key});
 
   // This widget is the root of your application.
   @override
@@ -34,9 +35,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   var currentPage = DrawerSections.dashboard;
   @override
   Widget build(BuildContext context) {
+    final user= FirebaseAuth.instance.currentUser;
     var container;
     if (currentPage == DrawerSections.dashboard) {
       container = DashboardPage();
@@ -58,6 +61,14 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: ()async{
+              await FirebaseAuth.instance.signOut();
+            },
+             icon: Icon(Icons.leave_bags_at_home)
+            )
+        ],
         backgroundColor: Colors.purple[700],
         title: Text("Alpha tech"),
         centerTitle: true,

@@ -113,87 +113,89 @@ class _RegistrationPageState extends State<RegistrationPage> {
           },
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Name'),
-              TextFormField(
-                controller: _nameController,
-              ),
-              SizedBox(height: 16.0),
-              Text('ID'),
-              TextFormField(
-                controller: _idController,
-              ),
-              SizedBox(height: 16.0),
-              Text('Mobile'),
-              TextFormField(
-                controller: _mobileController,
-              ),
-              SizedBox(height: 16.0),
-              Text('Email'),
-              TextFormField(
-                controller: _emailController,
-              ),
-              SizedBox(height: 16.0),
-              Text('Username'),
-              TextFormField(
-                controller: _usernameController,
-              ),
-              SizedBox(height: 16.0),
-              Text('Password'),
-              TextFormField(
-                  controller: _passwordController,
-                  obscureText: _obscureText,
-                  decoration: InputDecoration(
-                      // labelText: 'Password',
-                      suffixIcon: IconButton(
-                    icon: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _obscureText = !_obscureText;
-                      });
-                    },
-                  ))),
-              SizedBox(height: 32.0),
-              Center(
-                child: Column(
-                  children: [
-                    ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(padding: EdgeInsets.all(20)),
-                      onPressed: () {
-                        print("object");
-                        _submitForm();
-                        _createUser();
-                      },
-                      child: Text(
-                        'Register',
-                        style: TextStyle(fontSize: 20),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Name'),
+                TextFormField(
+                  controller: _nameController,
+                ),
+                SizedBox(height: 16.0),
+                Text('ID'),
+                TextFormField(
+                  controller: _idController,
+                ),
+                SizedBox(height: 16.0),
+                Text('Mobile'),
+                TextFormField(
+                  controller: _mobileController,
+                ),
+                SizedBox(height: 16.0),
+                Text('Email'),
+                TextFormField(
+                  controller: _emailController,
+                ),
+                SizedBox(height: 16.0),
+                Text('Username'),
+                TextFormField(
+                  controller: _usernameController,
+                ),
+                SizedBox(height: 16.0),
+                Text('Password'),
+                TextFormField(
+                    controller: _passwordController,
+                    obscureText: _obscureText,
+                    decoration: InputDecoration(
+                        // labelText: 'Password',
+                        suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscureText ? Icons.visibility_off : Icons.visibility,
                       ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _obscureText = !_obscureText;
+                        });
+                      },
+                    ))),
+                SizedBox(height: 32.0),
+                Center(
+                  child: Column(
+                    children: [
+                      ElevatedButton(
+                        style:
+                            ElevatedButton.styleFrom(padding: EdgeInsets.all(20)),
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => Login()));
+                          print("object");
+                          // _submitForm();
+                          _createUser();
                         },
                         child: Text(
-                          "Sign in",
+                          'Register',
                           style: TextStyle(fontSize: 20),
-                        )),
-                  ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) => Login()));
+                          },
+                          child: Text(
+                            "Sign in",
+                            style: TextStyle(fontSize: 20),
+                          )),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
