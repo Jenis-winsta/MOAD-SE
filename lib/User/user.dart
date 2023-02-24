@@ -1,4 +1,4 @@
-import 'package:finalapp/User/pages/logout.dart';
+// import 'package:finalapp/User/pages/logout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finalapp/User/my_drawer_header.dart';
@@ -55,9 +55,10 @@ class _HomePageState extends State<HomePage> {
       container = SettingsPage();
     } else if (currentPage == DrawerSections.send_feedback) {
       container = FeedbackPage();
-    } else if (currentPage == DrawerSections.logout) {
-      container = LogoutPage();
-    }
+    } 
+    // else if (currentPage == DrawerSections.logout) {
+    //   container = LogoutPage();
+    // }
 
     return Scaffold(
       appBar: AppBar(
@@ -107,8 +108,8 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.privacy_policy ? true : false),
           menuItem(7, "Send feedback", Icons.feedback_outlined,
               currentPage == DrawerSections.send_feedback ? true : false),
-          menuItem(8, "Log Out", Icons.logout,
-              currentPage == DrawerSections.logout ? true : false)
+          // menuItem(8, "Log Out", Icons.logout,
+          //     currentPage == DrawerSections.logout ? true : false)
         ],
       ),
     );
@@ -135,9 +136,10 @@ class _HomePageState extends State<HomePage> {
               currentPage = DrawerSections.privacy_policy;
             } else if (id == 7) {
               currentPage = DrawerSections.send_feedback;
-            } else if (id == 8) {
-              currentPage = DrawerSections.logout;
-            }
+            } 
+            // else if (id == 8) {
+            //   currentPage = DrawerSections.logout;
+            // }
           });
         },
         child: Padding(
@@ -171,7 +173,7 @@ enum DrawerSections {
   notification,
   privacy_policy,
   send_feedback,
-  logout
+  // logout
 }
 
 //planning to have a organization section where user can prioratise their company profiles

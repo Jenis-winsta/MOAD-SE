@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
@@ -12,7 +14,6 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
   @override
   Widget build(BuildContext context) {
     final user= FirebaseAuth.instance.currentUser;
-
     return Container(
       color: Colors.purple[700],
       width: double.infinity,

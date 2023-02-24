@@ -1,3 +1,4 @@
+import 'package:finalapp/LoginScreen/authpage.dart';
 import 'package:finalapp/LoginScreen/login.dart';
 import 'package:finalapp/LoginScreen/loginScreen.dart';
 import 'package:finalapp/User/user.dart';
@@ -20,12 +21,14 @@ void main() async{
   );
   runApp(const MyApp());
 }
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       // home: Admin(),
       // home: SplashScreen(),
       home: HomePage(),
@@ -86,7 +89,7 @@ class _HomePageState extends State<HomePage> {
           else if(snapshot.hasData){
             return as_User();
           }else{
-            return LoginScreen();
+            return AuthPage();
           }
           
           //return SplashScreen();

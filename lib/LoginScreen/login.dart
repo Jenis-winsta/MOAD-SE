@@ -20,7 +20,7 @@ class Login extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: LoginScreen(),
+      // home: LoginScreen(),
     );
   }
 }

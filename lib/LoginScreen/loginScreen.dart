@@ -1,18 +1,32 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 
 import 'package:finalapp/Admin/admin.dart';
 import 'package:finalapp/Admin_Web/admin_web.dart';
 import 'package:finalapp/LoginScreen/registation.dart';
 import 'package:finalapp/User/user.dart';
+import 'package:finalapp/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  // const LoginScreen({super.key});
+  // final Function() onClickedSignin;
+
+  // const LoginScreen({
+  //   Key? key, required this.onClickedSignup,
+  // }):super(key: key);
+  final VoidCallback onClickedSignUp;
+
+  const LoginScreen({
+    Key? key,
+    required this.onClickedSignUp,
+  }):super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -24,12 +38,12 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey= GlobalKey<FormState>();
+  // final _formKey= GlobalKey<FormState>();
 
-  String username_='';
+  String email_='';
   String password_='';
-  String fullname='';
-  bool login = false;
+  // String fullname='';
+  // bool login = false;
 
 
 
@@ -39,11 +53,11 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  /*static Future<User?> loginUsingEmailPassword({required String username,required String password, required BuildContext context})async{
+  /*static Future<User?> loginUsingEmailPassword({required String email,required String password, required BuildContext context})async{
     FirebaseAuth auth=FirebaseAuth.instance;
     User? user;
     try{
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(email: username, password: password);
+      UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
       user=userCredential.user;
       // Navigator.pushReplacement(context, '/home');
     }on FirebaseAuthException catch(e){
@@ -59,30 +73,30 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  login1(String username,String password){
-    print(username);
-    print(password);
+  // login1(String email,String password){
+  //   print(email);
+  //   print(password);
 
-    CollectionReference colref=
-        FirebaseFirestore.instance.collection('user');
+  //   CollectionReference colref=
+  //       FirebaseFirestore.instance.collection('user');
 
-    Map<String,dynamic> user_map={
-      "name":username,
-      "password":password,
-      "username":username,
-    };
+  //   Map<String,dynamic> user_map={
+  //     "name":email,
+  //     "password":password,
+  //     "email":email,
+  //   };
 
-    colref
-          .add(user_map)
-          .then((value) => print("user added"))
-          .catchError((error)=>print("Failed to add user: $username"));
+  //   colref
+  //         .add(user_map)
+  //         .then((value) => print("user added"))
+  //         .catchError((error)=>print("Failed to add user: $email"));
 
-  }
+  // }
 
-  login_fun(String username,String password){
+  login_fun(String email,String password){
     
     DocumentReference documentReference =
-        FirebaseFirestore.instance.collection("user").doc(username);
+        FirebaseFirestore.instance.collection("user").doc(email);
 
     // DocumentReference documentReference =
     //     FirebaseFirestore.instance.collection("Pets").doc(petName);
@@ -98,35 +112,30 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future signIn() async{
-    // showDialog(context: context,
-    // barrierDismissible: false,
-    //  builder: (context)=>Center(child: CircularProgressIndicator())
-    //  );
+    showDialog(context: context,
+    barrierDismissible: false,
+     builder: (context)=>Center(child: CircularProgressIndicator())
+     );
     try{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: usernameTEC.text.trim(), password: passwordTEC.text.trim());
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailTEC.text.trim(), password: passwordTEC.text.trim());
 
     }
     on FirebaseAuthException catch (e){
       print(e);
     }
     //Navigator.of(content) not worl
-    // navigatorKey.currentState!.popUntil((route)=>rout)
+    navigatorKey.currentState!.popUntil((route)=>route.isFirst);
   }
 
 
-
-
-
-
-
-  TextEditingController usernameTEC = TextEditingController();
+  TextEditingController emailTEC = TextEditingController();
   TextEditingController passwordTEC = TextEditingController();
   bool isRememberMe = false;
   bool _obscureText = true;
 
   @override
   void dispose(){
-    usernameTEC.dispose();
+    emailTEC.dispose();
     passwordTEC.dispose();
     super.dispose();
   }
@@ -142,12 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
   //   );
   // }
 
-  Widget buildUsername() {
+  Widget buildEmail() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          'Username',
+          'Email',
           style: TextStyle(
               color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
         ),
@@ -163,28 +172,22 @@ class _LoginScreenState extends State<LoginScreen> {
               ]),
           height: 60,
           child: TextFormField(
-            key: ValueKey('username'),
-            controller: usernameTEC,
-            // keyboardType: TextInputType.usernameAddress,
+            // key: ValueKey('email'),
+            controller: emailTEC,
+            // keyboardType: TextInputType.emailAddress,
             style: const TextStyle(color: Colors.black87),
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(top: 14),
                 prefixIcon: Icon(Icons.person, color: Color(0xffC468F9)),
-                hintText: 'Username',
+                hintText: 'Email',
                 hintStyle: TextStyle(color: Colors.black38)),
-            validator: (value){
-              if(value!.length<6){
-                return 'please enter proper username';
-              }else{
-                return null;
-              }
-            },
-            onSaved: (value){
-              setState(() {
-                username_=value!;
-              });
-            },
+            
+            // onSaved: (value){
+            //   setState(() {
+            //     email_=value!;
+            //   });
+            // },
           ),
         )
       ],
@@ -212,19 +215,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ]),
           height: 60,
           child: TextFormField(
-            key: ValueKey('password'),
-            validator: (value){
-              if(value!.length<6){
-                return 'please enter proper password';
-              }else{
-                return null;
-              }
-            },
-            onSaved:(value){
-              setState(() {
-                password_=value!;
-              });
-            },
+            
+            
+            // onSaved:(value){
+            //   setState(() {
+            //     password_=value!;
+            //   });
+            // },
             
             controller: passwordTEC,
             obscureText: _obscureText,
@@ -308,24 +305,40 @@ class _LoginScreenState extends State<LoginScreen> {
           shadowColor: Colors.white,
         ),
         onPressed: () async{
+          if (emailTEC.text == 'adminm' && passwordTEC.text == 'adminm') {
+            print("admin");
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => const Admin()));
+          } else if (emailTEC.text == 'admin' && passwordTEC.text == 'admin') {
+            print("admin");
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => Admin_Web()));
+          } 
+          else{
+            signIn();
+          }
+          
+          var _email = emailTEC.text;
+          var _pass = passwordTEC.text;
+          
+
           // if(_formKey.currentState!.validate()){
           //   _formKey.currentState!.save();
-          //   login ? AuthServices.login_fun(username_,password_,context):AuthServices.signupUser(username_,password_,context);
+          //   login ? AuthServices.login_fun(email_,password_,context):AuthServices.signupUser(email_,password_,context);
           // }
-          var _username = usernameTEC.text;
-          var _pass = passwordTEC.text;
-          login_fun(_username,_pass);
-          signIn();
-          // LoginFirebase(_username,_pass);
-          // if (_username == 'jenis' && _pass == 'jenis') {
+          
+          login_fun(_email,_pass);
+          
+          // LoginFirebase(_email,_pass);
+          // if (_email == 'jenis' && _pass == 'jenis') {
           //   print("user");
           //   Navigator.pushReplacement(
           //       context, MaterialPageRoute(builder: (context) => const as_User()));
-          // } else if (_username == 'adminm' && _pass == 'adminm') {
+          // } else if (_email == 'adminm' && _pass == 'adminm') {
           //   print("admin");
           //   Navigator.pushReplacement(
           //       context, MaterialPageRoute(builder: (context) => const Admin()));
-          // } else if (_username == 'admin' && _pass == 'admin') {
+          // } else if (_email == 'admin' && _pass == 'admin') {
           //   print("admin");
           //   Navigator.pushReplacement(
           //       context, MaterialPageRoute(builder: (context) => Admin_Web()));
@@ -355,15 +368,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget buildSignUpBtn() {
     return GestureDetector(
       // onTap: (() => print("Sign Up Pressed")),
-      onTap: (){
-        print("sign up");
-        Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Registration()));
-        // Registration();
+      // onTap: (){
+      //   print("sign up");
+      //   Navigator.push(
+      //           context, MaterialPageRoute(builder: (context) => Registration()));
+      //   // Registration();
 
-      },
+      // },
+
       child: RichText(
-        text: const TextSpan(children: [
+        text: TextSpan(children: [
           TextSpan(
               text: 'Don\'t have an account?',
               style: TextStyle(
@@ -371,6 +385,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontSize: 18,
                   fontWeight: FontWeight.w500)),
           TextSpan(
+              recognizer: TapGestureRecognizer()
+                ..onTap=widget.onClickedSignUp,
               text: 'Sign Up',
               style: TextStyle(
                   color: Colors.white,
@@ -384,56 +400,53 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key:_formKey,
-        child: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: GestureDetector(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  height: double.infinity,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromARGB(102, 150, 51, 207),
-                      Color.fromARGB(153, 160, 52, 222),
-                      Color.fromARGB(204, 177, 54, 248),
-                      Color.fromARGB(255, 190, 90, 248),
-                    ],
-                  )),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 25, vertical: 120),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        const Text(
-                          'Sign in',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                          ),
+      body: AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.light,
+        child: GestureDetector(
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromARGB(102, 150, 51, 207),
+                    Color.fromARGB(153, 160, 52, 222),
+                    Color.fromARGB(204, 177, 54, 248),
+                    Color.fromARGB(255, 190, 90, 248),
+                  ],
+                )),
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 120),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text(
+                        'Sign in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(height: 50),
-                        buildUsername(),
-                        const SizedBox(height: 20),
-                        buildPassword(),
-                        buildForgotPassBtn(),
-                        buildRememberCb(),
-                        buildLoginBtn(),
-                        buildSignUpBtn(),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 50),
+                      buildEmail(),
+                      const SizedBox(height: 20),
+                      buildPassword(),
+                      buildForgotPassBtn(),
+                      buildRememberCb(),
+                      buildLoginBtn(),
+                      buildSignUpBtn(),
+                    ],
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),
