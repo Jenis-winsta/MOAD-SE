@@ -26,26 +26,26 @@ class _FeedbackPageState extends State<FeedbackPage> {
     final subject = 'Feedback from $name';
     final body = 'Feedback: $feedback';
     // final url='mailto:$_recipient';
-    // final url ='mailto:$_recipient?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(body)}';
+    final url ='mailto:$_recipient?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(body)}';
 
-    final Uri params = Uri(
-      scheme: 'mailto',
-      path: _recipient,
-      query:
-          'subject=App Feedback&body=App Version 3.23', //add subject and body here
-    );
+    // final Uri params = Uri(
+    //   scheme: 'mailto',
+    //   path: _recipient,
+    //   query:
+    //       'subject=App Feedback&body=App Version 3.23', //add subject and body here
+    // );
 
-    var url = params.toString();
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+    // var url = params.toString();
     // if (await canLaunch(url)) {
     //   await launch(url);
     // } else {
     //   throw 'Could not launch $url';
     // }
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
