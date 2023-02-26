@@ -14,439 +14,114 @@ class JobSearch extends StatelessWidget {
   }
 }
 
-/*
-class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+class SearchData {
+  final int vid;
+  final String title;
+  final String subtitle;
+  final String description;
 
-  @override
-  _SearchPageState createState() => _SearchPageState();
+  SearchData(this.vid, this.title, this.subtitle, this.description);
 }
 
-class _SearchPageState extends State<SearchPage> {
-  TextEditingController _searchController = TextEditingController();
-
-  List<String> _listItems = List.generate(100, (index) => "Item $index");
-
-  List<String> _filteredItems = [];
-
-  @override
-  void initState() {
-    _filteredItems.addAll(_listItems);
-    super.initState();
-  }
-
-  void _filterList(String searchText) {
-    setState(() {
-      _filteredItems = _listItems
-          .where((item) =>
-              item.toLowerCase().contains(searchText.toLowerCase()))
-          .toList();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false, 
-        title: TextField(
-          controller: _searchController,
-          onChanged: (value) {
-            _filterList(value);
-          },
-          decoration: InputDecoration(
-            hintText: "Search",
-            hintStyle: TextStyle(color: Colors.purple),
-            prefixIcon: Icon(Icons.search, color: Colors.purple),
-            border: InputBorder.none,
-          ),
-          style: TextStyle(color: Colors.purple),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: _filteredItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(_filteredItems[index]),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DetailsPage(details: _filteredItems[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class DetailsPage extends StatelessWidget {
-  final String details;
-
-  const DetailsPage({Key? key, required this.details}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(details)),
-      body: Center(child: Text(details)),
-    );
-  }
-}*/
-/*
-class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  _SearchPageState createState() => _SearchPageState();
-}
-
-final List<String> titleList = [
-  "Title 1",
-  "Title 2",
-  "Title 3",
-  // add more titles as needed
+final List<SearchData> searchDataList = [
+  SearchData(1, 'Title 1', 'Subtitle 1', 'Description 1'),
+  SearchData(2, 'Title 2', 'Subtitle 2', 'Description 2'),
+  SearchData(3, 'Title 3', 'Subtitle 3', 'Description 3'),
 ];
 
+class SearchPage extends StatefulWidget {
+  @override
+  _SearchPageState createState() => _SearchPageState();
+}
+
 class _SearchPageState extends State<SearchPage> {
-  final TextEditingController _searchController = TextEditingController();
-
-  late List<String> _listItems;
-  List<String> _filteredItems = [];
-  List<String> _initListItems() {
-    List<String> titleList = [
-      "Title 1",
-      "Title 2",
-      "Title 3",
-      "Title 4",
-      "Title 5",
-      "Title 6",
-      "Title 7",
-      "Title 8",
-      "Title 9",
-      "Title 10",
-      "Title 11",
-      "Title 12"
-      "Title 13",
-      "Title 14",
-      "Title 15",
-      "Title 16",
-      "Title 17",
-      "Title 18",
-      "Title 19",
-      "Title 20",
-      "Title 21",
-      "Title 22",
-      "Title 23",
-      "Title 24",
-      "Title 25",
-      "Title 26",
-      "Title 27",
-      "Title 28",
-      "Title 29",
-      "Title 30",
-      "Title 31",
-      "Title 32",
-      "Title 33",
-      "Title 34",
-      "Title 35",
-      "Title 36",
-      "Title 37",
-    ];
-    return List.generate(titleList.length, (index) => titleList[index]);
-  }
-
-  @override
-  void initState() {
-    _filteredItems.addAll(_listItems);
-    _listItems = _initListItems();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  void _filterList(String searchText) {
-    setState(() {
-      _filteredItems = _listItems
-          .where(
-              (item) => item.toLowerCase().contains(searchText.toLowerCase()))
-          .toList();
-    });
-  }
+  String searchText = '';
 
   @override
   Widget build(BuildContext context) {
+    final filteredList = searchText.isEmpty ? searchDataList : searchDataList.where((searchData) =>
+        searchData.title.toLowerCase().contains(searchText.toLowerCase()) ||
+        searchData.subtitle.toLowerCase().contains(searchText.toLowerCase()) ||
+        searchData.description.toLowerCase().contains(searchText.toLowerCase())).toList();
+
     return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: _searchController,
-          onChanged: (value) {
-            _filterList(value);
-          },
-          decoration: InputDecoration(
-            hintText: "Search",
-            hintStyle: TextStyle(color: Colors.black),
-            prefixIcon: Icon(Icons.search, color: Colors.black),
-            border: InputBorder.none,
-          ),
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
-      body: ListView.builder(
-        itemCount: _filteredItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(
-              _filteredItems[index],
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
+      // appBar: AppBar(
+      //   title: Text('Search'),
+      // ),
+      body: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search...',
               ),
+              onChanged: (text) {
+                setState(() {
+                  searchText = text;
+                });
+              },
             ),
-            subtitle: Text(
-              'Subtitle for ${_filteredItems[index]}',
-              style: TextStyle(fontSize: 14.0),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: filteredList.length,
+              itemBuilder: (BuildContext context, int index) {
+                final searchData = filteredList[index];
+                return ListTile(
+                  title: Text(searchData.title),
+                  subtitle: Text(searchData.subtitle),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => DetailsPage(searchData: searchData)),
+                    );
+                  },
+                );
+              },
             ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DetailsPage(details: _filteredItems[index]),
-                ),
-              );
-            },
-          );
-        },
+          ),
+        ],
       ),
     );
   }
 }
 
 class DetailsPage extends StatelessWidget {
-  final String details;
+  final SearchData searchData;
 
-  const DetailsPage({Key? key, required this.details}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(details),
-        // automaticallyImplyLeading: false,
-      ),
-      body: Center(child: Text(details)),
-    );
-  }
-}
-
-class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  _SearchPageState createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  late List<String> _listItems;
-  final TextEditingController _searchController = TextEditingController();
-
-  List<String> _initListItems() {
-    List<String> titleList = [
-      "Title 1",
-      "Title 2",
-      "Title 3",
-      // add more titles as needed
-    ];
-    return List.generate(titleList.length, (index) => titleList[index]);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _listItems = _initListItems();
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
+  const DetailsPage({Key? key, required this.searchData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            hintText: 'Search...',
-          ),
-          onChanged: (value) {
-            setState(() {});
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              _searchController.clear();
-              setState(() {});
-            },
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: _listItems.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(
-              _listItems[index],
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: Text(
-              'Subtitle for ${_listItems[index]}',
-              style: TextStyle(fontSize: 14.0),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DetailsPage(details: _listItems[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}*/
-
-
-
-class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  _SearchPageState createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  late List<String> _listItems;
-  final TextEditingController _searchController = TextEditingController();
-
-  List<String> _initListItems() {
-    List<String> titleList = [
-      "Title 1",
-      "Title 2",
-      "Title 3",
-      // add more titles as needed
-    ];
-    // List<String> subtitleList = [
-    //   "subTitle 1",
-    //   "subTitle 2",
-    //   "subTitle 3",
-    //   // add more titles as needed
-    // ];
-    return List.generate(titleList.length, (index) => titleList[index]);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _listItems = _initListItems();
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<String> _searchList = _listItems.where((item) =>
-        item.toLowerCase().contains(_searchController.text.toLowerCase())).toList();
-    return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: _searchController,
-          decoration: InputDecoration(
-            hintText: 'Search...',
-          ),
-          onChanged: (value) {
-            setState(() {});
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () {
-              _searchController.clear();
-              setState(() {});
-            },
-          ),
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: _searchList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(
-              _searchList[index],
-              style: TextStyle(
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            subtitle: Text(
-              'Subtitle for ${_searchList[index]}',
-              style: TextStyle(fontSize: 14.0),
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      DetailsPage(details: _searchList[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class DetailsPage extends StatelessWidget {
-  final String details;
-
-  const DetailsPage({required this.details});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(details),
+        title: Text(searchData.title),
       ),
       body: Center(
-        child: Text(details),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(searchData.subtitle),
+            Text(searchData.description),
+          ],
+        ),
       ),
     );
   }
 }
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: SearchPage(),
+    );
+  }
+}
+
 

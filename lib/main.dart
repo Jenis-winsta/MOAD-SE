@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       navigatorKey: navigatorKey,
       // home: Admin(),
       // home: SplashScreen(),

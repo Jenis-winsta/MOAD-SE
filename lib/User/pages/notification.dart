@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class NotificationPage extends StatelessWidget {
-  final List<NotificationData> notifications = [    NotificationData('Notification 1', 'Notification details 1'),    
+  final List<NotificationData> notifications = [    
+  NotificationData('Notification 1', 'Notification details 1'),    
   NotificationData('Notification 2', 'Notification details 2'),    
   NotificationData('Notification 4', 'Notification details 3'), 
   NotificationData('Notification 5', 'Notification details 3'), 

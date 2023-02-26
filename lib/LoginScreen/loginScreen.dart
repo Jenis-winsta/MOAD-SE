@@ -21,6 +21,7 @@ class LoginScreen extends StatefulWidget {
   // const LoginScreen({
   //   Key? key, required this.onClickedSignup,
   // }):super(key: key);
+  
   final VoidCallback onClickedSignUp;
 
   const LoginScreen({
@@ -39,59 +40,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   // final _formKey= GlobalKey<FormState>();
-
+ 
   String email_='';
   String password_='';
-  // String fullname='';
-  // bool login = false;
-
-
-
-
-
-
-
-
-
-  /*static Future<User?> loginUsingEmailPassword({required String email,required String password, required BuildContext context})async{
-    FirebaseAuth auth=FirebaseAuth.instance;
-    User? user;
-    try{
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(email: email, password: password);
-      user=userCredential.user;
-      // Navigator.pushReplacement(context, '/home');
-    }on FirebaseAuthException catch(e){
-      if(e.code=="user-not-found"){
-        print("No user found for that email");
-      }
-    }
-    
-    return user;
-  }*/
-
-
-
-
-
-  // login1(String email,String password){
-  //   print(email);
-  //   print(password);
-
-  //   CollectionReference colref=
-  //       FirebaseFirestore.instance.collection('user');
-
-  //   Map<String,dynamic> user_map={
-  //     "name":email,
-  //     "password":password,
-  //     "email":email,
-  //   };
-
-  //   colref
-  //         .add(user_map)
-  //         .then((value) => print("user added"))
-  //         .catchError((error)=>print("Failed to add user: $email"));
-
-  // }
+  int error=0;
+ 
 
   login_fun(String email,String password){
     
@@ -103,12 +56,33 @@ class _LoginScreenState extends State<LoginScreen> {
     documentReference.get().then((datasnapshot) {
       if (kDebugMode) {
         print(datasnapshot.data());
+
       }
       else{
         print("error");
       }
     });
 
+  }
+  Future <String> getName(String email) async{
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    String name="";
+
+    await firestore
+      .collection('user')
+      .doc(email)
+      .get()
+      .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+      name = documentSnapshot.get('Name');
+      print('Name: $name');
+    } else {
+      print('Document does not exist!');
+    }
+      }).catchError((error){
+        print('Error getting document: $error');
+      });
+    return name;
   }
 
   Future signIn() async{
@@ -118,19 +92,40 @@ class _LoginScreenState extends State<LoginScreen> {
      );
     try{
     await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailTEC.text.trim(), password: passwordTEC.text.trim());
-
     }
     on FirebaseAuthException catch (e){
-      print(e);
+      // error=1;
+      if (kDebugMode) {
+        print(e);
+      }
     }
+    // if(error==1){
+    //   const MaterialBanner(
+    //     padding: EdgeInsets.all(20),
+    //     content: Text('Hello, I am a Material Banner'),
+    //     leading: Icon(Icons.agriculture_outlined),
+    //     backgroundColor: Color(0xFFE0E0E0),
+    //     actions: <Widget>[
+    //       TextButton(
+    //         onPressed: null,
+    //         child: Text('OPEN'),
+    //       ),
+    //       TextButton(
+    //         onPressed: null,
+    //         child: Text('DISMISS'),
+    //       ),
+    //     ],
+    //   );
+    // }
     //Navigator.of(content) not worl
     navigatorKey.currentState!.popUntil((route)=>route.isFirst);
+
   }
 
 
   TextEditingController emailTEC = TextEditingController();
   TextEditingController passwordTEC = TextEditingController();
-  bool isRememberMe = false;
+  // bool isRememberMe = false;
   bool _obscureText = true;
 
   @override
@@ -264,32 +259,32 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget buildRememberCb() {
-    return Container(
-      height: 20,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: isRememberMe,
-              checkColor: Colors.purple,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  isRememberMe = value!;
-                });
-              },
-            ),
-          ),
-          const Text(
-            'Remember Me',
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
-  }
+  // Widget buildRememberCb() {
+  //   return Container(
+  //     height: 20,
+  //     child: Row(
+  //       children: <Widget>[
+  //         Theme(
+  //           data: ThemeData(unselectedWidgetColor: Colors.white),
+  //           child: Checkbox(
+  //             value: isRememberMe,
+  //             checkColor: Colors.purple,
+  //             activeColor: Colors.white,
+  //             onChanged: (value) {
+  //               setState(() {
+  //                 isRememberMe = value!;
+  //               });
+  //             },
+  //           ),
+  //         ),
+  //         const Text(
+  //           'Remember Me',
+  //           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget buildLoginBtn() {
     return Container(
@@ -328,7 +323,7 @@ class _LoginScreenState extends State<LoginScreen> {
           // }
           
           login_fun(_email,_pass);
-          
+          getName(_email);
           // LoginFirebase(_email,_pass);
           // if (_email == 'jenis' && _pass == 'jenis') {
           //   print("user");
@@ -399,54 +394,62 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
-        value: SystemUiOverlayStyle.light,
-        child: GestureDetector(
-          child: Stack(
-            children: <Widget>[
-              Container(
-                height: double.infinity,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromARGB(102, 150, 51, 207),
-                    Color.fromARGB(153, 160, 52, 222),
-                    Color.fromARGB(204, 177, 54, 248),
-                    Color.fromARGB(255, 190, 90, 248),
-                  ],
-                )),
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 25, vertical: 120),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text(
-                        'Sign in',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                      buildEmail(),
-                      const SizedBox(height: 20),
-                      buildPassword(),
-                      buildForgotPassBtn(),
-                      buildRememberCb(),
-                      buildLoginBtn(),
-                      buildSignUpBtn(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
+      home: Scaffold(
+        body: AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: GestureDetector(
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  height: double.infinity,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color.fromARGB(102, 150, 51, 207),
+                      Color.fromARGB(153, 160, 52, 222),
+                      Color.fromARGB(204, 177, 54, 248),
+                      Color.fromARGB(255, 190, 90, 248),
                     ],
+                  )),
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 25, vertical: 120),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          'Sign in',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 50),
+                        buildEmail(),
+                        const SizedBox(height: 20),
+                        buildPassword(),
+                        buildForgotPassBtn(),
+                        const SizedBox(height: 20),
+                        // buildRememberCb(),
+                        buildLoginBtn(),
+                        buildSignUpBtn(),
+                        
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ],
+                )
+              ],
+            ),
           ),
         ),
       ),

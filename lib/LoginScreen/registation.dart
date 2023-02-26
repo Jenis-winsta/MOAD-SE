@@ -85,6 +85,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error occured"),
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+          backgroundColor: Colors.green,
+        ),
+      );
       print(e);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
@@ -108,19 +116,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
       "id": id,
       "mobile": mobile,
       "email": email,
-      // "username": username,
       "password": password,
-      // "Mobile number": mobileNumber,
-      // "Email address": emailAddress,
     };
-
     documentReference.set(userinfo).whenComplete(() {
       if (kDebugMode) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              content: Text("Regisered successfully"),
-              behavior: SnackBarBehavior.floating,
-              margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0)),
+            content: Text("Regisered successfully"),
+            behavior: SnackBarBehavior.floating,
+            margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+            backgroundColor: Colors.green,
+          ),
         );
         print("$name created");
       } else {

@@ -1,4 +1,3 @@
-// import 'package:finalapp/User/pages/logout.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:finalapp/User/my_drawer_header.dart';
@@ -20,8 +19,11 @@ class as_User extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.purple,
+      ),
       home: HomePage(),
     );
   }
