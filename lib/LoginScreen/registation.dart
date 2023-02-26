@@ -99,7 +99,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _createUser() {
-    print("create user");
+    
     String name = _nameController.text.trim();
     String id = _idController.text.trim();
     String mobile = _mobileController.text.trim();
@@ -120,8 +120,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     };
     documentReference.set(userinfo).whenComplete(() {
       if (kDebugMode) {
+        print("create user");
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text("Regisered successfully"),
             behavior: SnackBarBehavior.floating,
             margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
@@ -130,12 +131,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
         print("$name created");
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text("Could not create User"),
-              behavior: SnackBarBehavior.floating,
-              margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0)),
-        );
+        print("e");
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //       content: Text("Could not create User"),
+        //       behavior: SnackBarBehavior.floating,
+        //       margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0)),
+        // );
       }
     });
   }

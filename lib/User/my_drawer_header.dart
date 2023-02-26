@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyHeaderDrawer extends StatefulWidget {
@@ -48,13 +47,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
     }
   }*/
 
-  @override
-  void initState() {
-    // final user = FirebaseAuth.instance.currentUser;
-    // getName(user!.email!);
-    // TODO: implement initState
-    super.initState();
-  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +94,7 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
                   } else {
                     return Text(name,style: TextStyle(
                       color: Colors.grey[200],
-                      fontSize: 14,
+                      fontSize: 16,
                     ));
                   }
                 /*if (snapshot.hasData && snapshot.data != '') {
