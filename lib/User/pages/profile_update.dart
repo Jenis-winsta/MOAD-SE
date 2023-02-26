@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
 // class ProfilePage extends StatelessWidget {
 //   //const DashboardPage({super.key});
 //   @override
@@ -21,7 +24,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Profile Update',
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
@@ -106,20 +109,26 @@ class _EditProfileUIState extends State<EditProfileUI> {
                             width: 4,
                             color: Colors.white
                           ),
-                          color: Colors.purple
+                          color: Colors.purple.shade700
                         ),
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                            
+                          ), 
+                          onPressed: () { //ImageUploader(); 
+                          print("clicked edit");},
                         ),
+                        
                       )
                     )
                   ],
                 ),
               ),
               SizedBox(height: 30),
-              buildTextField("Full Name", "User", false),
-              buildTextField("Email", "email address", false),
+              buildTextField("Name", "User", false),
+              buildTextField("Mobile no.", "00000 00000", false),
               buildTextField("Password", "******", true),
               SizedBox(height: 30),
               Row(
@@ -145,7 +154,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
                       color: Colors.white,
                     )),
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.purple,
+                      primary: Colors.purple.shade700,
                       padding: EdgeInsets.symmetric(horizontal: 50),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))
                     ),
@@ -167,7 +176,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
           suffixIcon: isPassWordTextField?
             IconButton(
               icon: Icon(
-                isObscurePassword? Icons.visibility_off:Icons.visibility, color: Colors.purple),
+                isObscurePassword? Icons.visibility_off:Icons.visibility, color: Colors.purple.shade700),
               onPressed: (){
                 setState(() {
               isObscurePassword = !isObscurePassword;
@@ -189,3 +198,56 @@ class _EditProfileUIState extends State<EditProfileUI> {
     );
   }
 }
+
+
+
+// void main() => runApp(MyApp());
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Picture Upload',
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text('Picture Upload'),
+//         ),
+//         body: Center(
+//           child: ImageUploader(),
+//         ),
+//       ),
+//     );
+//   }
+// }
+/*
+class ImageUploader extends StatefulWidget {
+  @override
+  _ImageUploaderState createState() => _ImageUploaderState();
+}
+
+class _ImageUploaderState extends State<ImageUploader> {
+  late File _image;
+  
+  Future<void> _getImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    
+    setState(() {
+      _image = File(pickedFile!.path);
+    });
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ElevatedButton(
+          onPressed: _getImage,
+          child: Text('Choose Image'),
+        ),
+        SizedBox(height: 20.0),
+        _image != null ? Image.file(_image) : Text('No image selected'),
+      ],
+    );
+  }
+}*/

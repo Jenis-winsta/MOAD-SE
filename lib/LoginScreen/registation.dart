@@ -131,7 +131,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
         );
         print("$name created");
       } else {
-        print("e");
+        if (kDebugMode) {
+          print("error");
+        }
         // ScaffoldMessenger.of(context).showSnackBar(
         //   SnackBar(
         //       content: Text("Could not create User"),

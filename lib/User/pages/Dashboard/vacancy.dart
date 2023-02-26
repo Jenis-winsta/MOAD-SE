@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class Vacancy extends StatelessWidget {
   const Vacancy({super.key});
@@ -9,12 +11,12 @@ class Vacancy extends StatelessWidget {
       appBar: AppBar(
         title: Text("Vacancy"),
       ),
-      body: VacancyPage(),
+      body: VacancyList(),
     );
   }
 }
 
-
+/*
 class VacancyPage extends StatelessWidget {
   final List<VacancyData> Vacancys = [
     VacancyData('Manager', '5 years experience in sales ',
@@ -117,6 +119,108 @@ class VacancyDetailsPage extends StatelessWidget {
                 onPressed: () {},
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}*/
+
+
+
+class VacancyList extends StatefulWidget {
+  @override
+  _VacancyListState createState() => _VacancyListState();
+}
+
+class _VacancyListState extends State<VacancyList> {
+  List<DocumentSnapshot> _documentList = [];
+
+  CollectionReference _collectionReference =
+      FirebaseFirestore.instance.collection('vacancy');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  void _loadData() {
+    _collectionReference.get().then((QuerySnapshot querySnapshot) {
+      setState(() {
+        _documentList = querySnapshot.docs;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('Firestore Data List'),
+      // ),
+      body: ListView.builder(
+        itemCount: _documentList.length,
+        itemBuilder: (BuildContext context, int index) {
+          DocumentSnapshot document = _documentList[index];
+          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+          return ListTile(
+            leading: Icon(Icons.work),
+            title: Text(data['title']),
+            subtitle: Text(data['details']),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsPage(document: document),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DetailsPage extends StatelessWidget {
+  final DocumentSnapshot document;
+
+  DetailsPage({required this.document});
+
+  @override
+  Widget build(BuildContext context) {
+    Map<String, dynamic> data = document.data()as Map<String, dynamic>;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(data['title']),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Job title:"+data['title'],
+              style: TextStyle(fontSize: 20.0),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              "Details: "+data['details'],
+              style: TextStyle(fontSize: 16.0),
+            ),
+            SizedBox(height: 16.0,),
+            Text(
+              "Description: "+data['description'],
+              style: TextStyle(fontSize: 18.0),
+            ),
+            SizedBox(height: 16.0),
+            Text(
+              'V ID: ${data['vid']}',
+              style: TextStyle(fontSize: 16.0),
+            ),
+            SizedBox(height: 8.0),
+            
           ],
         ),
       ),
