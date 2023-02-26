@@ -1,8 +1,5 @@
 import 'package:finalapp/LoginScreen/authpage.dart';
-import 'package:finalapp/LoginScreen/login.dart';
-import 'package:finalapp/LoginScreen/loginScreen.dart';
 import 'package:finalapp/User/user.dart';
-import 'package:finalapp/splashScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

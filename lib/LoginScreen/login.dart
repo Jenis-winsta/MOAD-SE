@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'loginScreen.dart';
 // import 'loginScreen.dart';
 void main() {
   runApp(const Login());
@@ -15,7 +14,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return MaterialApp(
-      title: 'Flutter Login UI',
+      title: 'Login',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.purple,

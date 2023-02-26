@@ -18,7 +18,7 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dashboard',
+      title: 'Alpha tech',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.purple.shade700),
         useMaterial3: true,

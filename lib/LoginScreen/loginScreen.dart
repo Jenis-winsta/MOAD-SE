@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
 
 import 'package:finalapp/Admin/admin.dart';
 import 'package:finalapp/Admin_Web/admin_web.dart';
-import 'package:finalapp/LoginScreen/registation.dart';
-import 'package:finalapp/User/user.dart';
 import 'package:finalapp/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
