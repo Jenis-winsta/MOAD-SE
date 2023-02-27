@@ -122,57 +122,12 @@ class _EditProfileUIState extends State<EditProfileUI> {
         }
       });
     }
-
-    
-    //Map
-    // Map<String, dynamic> userinfo = {
-    //   "Name": name,
-    //   "mobile": mobile,
-    //   "Bio": bio,
-    // };
-    // documentReference.update(userinfo).whenComplete(() {
-    //   if (kDebugMode) {
-    //     print("Updated user");
-    //     ScaffoldMessenger.of(context).showSnackBar(
-    //       const SnackBar(
-    //         content: Text("Updated successfully"),
-    //         behavior: SnackBarBehavior.floating,
-    //         margin: EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
-    //         backgroundColor: Colors.green,
-    //       ),
-    //     );
-    //     print("$name created");
-    //   } else {
-    //     if (kDebugMode) {
-    //       print("error");
-    //     }
-    //   }
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     var arrow_back;
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Flutter Edit profile UI'),
-      //   leading: IconButton(
-      //     icon: Icon(
-      //       Icons.arrow_back,
-      //       color: Colors.white,
-      //     ),
-      //     onPressed: () {},
-      //   ),
-      //   actions: [
-      //     IconButton(
-      //       icon: Icon(
-      //         Icons.settings,
-      //         color: Colors.white,
-      //         ),
-      //       onPressed: () {},
-      //     )
-      //   ],
-      // ),
       body: Container(
         padding: EdgeInsets.only(left: 15, top: 20, right: 15),
         child: GestureDetector(
@@ -199,30 +154,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
                             image: const DecorationImage(
                               fit: BoxFit.cover,
                               image: AssetImage('assets/male.jpg'),
-                              // NetworkImage(
-                              //   'https://www.mumbailive.com/images/news/images_1532592130426_xavier_final.jpg?bg=c59f71&crop=1368%2C768%2C0%2C-0.07709252015859094&fit=fill&fitToScale=w%2C1368%2C768&fm=webp&h=768&height=768&w=1368&width=1368'
-                              // ),
                             ))),
-                    Positioned(
-                        bottom: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(width: 4, color: Colors.white),
-                              color: Colors.purple.shade700),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.edit,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              //ImageUploader();
-                              print("clicked edit");
-                            },
-                          ),
-                        ))
                   ],
                 ),
               ),
@@ -259,7 +191,7 @@ class _EditProfileUIState extends State<EditProfileUI> {
                     onPressed: () {
                       _nameController.text = '';
                       _mobileController.text = '';
-                      _bioController.text = "";
+                      _bioController.text = '';
                     },
                     child: Text("CANCEL",
                         style: TextStyle(
@@ -295,89 +227,4 @@ class _EditProfileUIState extends State<EditProfileUI> {
       ),
     );
   }
-
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPassWordTextField) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 30),
-      child: TextField(
-        obscureText: isPassWordTextField ? isObscurePassword : false,
-        decoration: InputDecoration(
-            suffixIcon: isPassWordTextField
-                ? IconButton(
-                    icon: Icon(
-                        isObscurePassword
-                            ? Icons.visibility_off
-                            : Icons.visibility,
-                        color: Colors.purple.shade700),
-                    onPressed: () {
-                      setState(() {
-                        isObscurePassword = !isObscurePassword;
-                      });
-                    },
-                  )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 5),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-            )),
-      ),
-    );
-  }
 }
-
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Picture Upload',
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text('Picture Upload'),
-//         ),
-//         body: Center(
-//           child: ImageUploader(),
-//         ),
-//       ),
-//     );
-//   }
-// }
-/*
-class ImageUploader extends StatefulWidget {
-  @override
-  _ImageUploaderState createState() => _ImageUploaderState();
-}
-
-class _ImageUploaderState extends State<ImageUploader> {
-  late File _image;
-  
-  Future<void> _getImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-    
-    setState(() {
-      _image = File(pickedFile!.path);
-    });
-  }
-  
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ElevatedButton(
-          onPressed: _getImage,
-          child: Text('Choose Image'),
-        ),
-        SizedBox(height: 20.0),
-        _image != null ? Image.file(_image) : Text('No image selected'),
-      ],
-    );
-  }
-}*/
