@@ -12,6 +12,7 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
   // const DashboardPage({super.key});
   var title = ['Device Settings', 'Notifications', 'App Settings'];
+  // var title = ['Device Settings', 'Notifications', 'App Settings','general settings'];
 
   var icon = [
     Icons.app_settings_alt,
@@ -32,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   ListView _buildListView(BuildContext context) {
     return ListView.builder(
-      itemCount: 3,
+      itemCount: title.length,
       itemBuilder: (_, index) {
         return Padding(
           padding: const EdgeInsets.all(20.0),
@@ -52,7 +53,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 AppSettings.openNotificationSettings();
               } else if (index == 2) {
                 AppSettings.openAppSettings();
-              }
+              } 
+              // else if(index ==3){
+                
+              // }
 
               // Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailPage(index)));
             },

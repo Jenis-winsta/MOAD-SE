@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+class Vacancy extends StatelessWidget {
+  const Vacancy({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Vacancy"),
+      ),
+      body: NotificationPage(),
+    );
+  }
+}
+
+/*
 class NotificationPage extends StatelessWidget {
   final List<NotificationData> notifications = [    
   NotificationData('Notification 1', 'Notification details 1'),    
@@ -80,6 +95,137 @@ class NotificationDetailsPage extends StatelessWidget {
             SizedBox(height: 16),
             Text(notificationData.details),
           ],
+        ),
+      ),
+    );
+  }
+}*/
+
+class NotificationPage extends StatefulWidget {
+  @override
+  _NotificationPageState createState() => _NotificationPageState();
+}
+
+class _NotificationPageState extends State<NotificationPage> {
+  List<DocumentSnapshot> _documentList = [];
+
+  final CollectionReference _collectionReference =
+      FirebaseFirestore.instance.collection('notifications');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+    DocumentReference copyFrom =
+        FirebaseFirestore.instance.collection('internship').doc('204');
+    DocumentReference copyTo =
+        FirebaseFirestore.instance.collection('notifications').doc('204');
+    copyFrom.get().then((value) => {copyTo.set(value.data())});
+  }
+
+  void _loadData() {
+    _collectionReference.get().then((QuerySnapshot querySnapshot) {
+      setState(() {
+        _documentList = querySnapshot.docs;
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(
+      //   title: Text('Firestore Data List'),
+      // ),
+      body: ListView.builder(
+        itemCount: _documentList.length,
+        itemBuilder: (BuildContext context, int index) {
+          DocumentSnapshot document = _documentList[index];
+          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+          return ListTile(
+            leading: Icon(Icons.notifications),
+            // title:Text("vacancy posted"),
+            title: Text("Vacancy posted"),
+            subtitle: Text(data['title']),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsPage(document: document),
+                ),
+              );
+            },
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DetailsPage extends StatelessWidget {
+  final DocumentSnapshot document;
+
+  DetailsPage({required this.document});
+
+  @override
+  Widget build(BuildContext context) {
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(data['title']),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Job title:" + data['title'],
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Details: " + data['details'],
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  "Description: " + data['description'],
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'V ID: ${data['vid']}',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(height: 8.0),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.all(70),
+                    child: ElevatedButton(
+                      // ignore: sort_child_properties_last
+                      child: const Text(
+                        'Apply',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        padding: EdgeInsets.all(18),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
