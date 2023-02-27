@@ -160,23 +160,32 @@ class _EditProfileUIState extends State<EditProfileUI> {
               ),
               SizedBox(height: 30),
               Text('Name'),
-              TextFormField(
-                controller: _nameController,
-                // decoration: InputDecoration(labelText: 'Name'),
+              Semantics(
+                label: 'Name',
+                child: TextFormField(
+                  controller: _nameController,
+                  // decoration: InputDecoration(labelText: 'Name'),
+                ),
               ),
               SizedBox(height: 30),
               Text('Mobile no.'),
-              TextFormField(
-                controller: _mobileController,
-                // decoration: InputDecoration(labelText: 'Mobile no.'),
+              Semantics(
+                label: 'Mobile number',
+                child: TextFormField(
+                  controller: _mobileController,
+                  // decoration: InputDecoration(labelText: 'Mobile no.'),
+                ),
               ),
               SizedBox(height: 30),
               Text('Bio'),
-              TextFormField(
-                controller: _bioController,
-                keyboardType: TextInputType.multiline,
-                maxLines: 5,
-                // decoration: InputDecoration(labelText: 'Bio'),
+              Semantics(
+                label: 'Bio details',
+                child: TextFormField(
+                  controller: _bioController,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  // decoration: InputDecoration(labelText: 'Bio'),
+                ),
               ),
 
               // buildTextField("Name", "User", false),
@@ -187,37 +196,43 @@ class _EditProfileUIState extends State<EditProfileUI> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  OutlinedButton(
-                    onPressed: () {
-                      _nameController.text = '';
-                      _mobileController.text = '';
-                      _bioController.text = '';
-                    },
-                    child: Text("CANCEL",
-                        style: TextStyle(
+                  Semantics(
+                    label: 'Cancel',
+                    child: OutlinedButton(
+                      onPressed: () {
+                        _nameController.text = '';
+                        _mobileController.text = '';
+                        _bioController.text = '';
+                      },
+                      child: Text("CANCEL",
+                          style: TextStyle(
+                              fontSize: 15,
+                              letterSpacing: 2,
+                              color: Colors.black)),
+                      style: OutlinedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                    ),
+                  ),
+                  Semantics(
+                    label: 'Save',
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _updateUser();
+                      },
+                      child: Text("SAVE",
+                          style: TextStyle(
                             fontSize: 15,
                             letterSpacing: 2,
-                            color: Colors.black)),
-                    style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _updateUser();
-                    },
-                    child: Text("SAVE",
-                        style: TextStyle(
-                          fontSize: 15,
-                          letterSpacing: 2,
-                          color: Colors.white,
-                        )),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.purple.shade700,
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
+                            color: Colors.white,
+                          )),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.purple.shade700,
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20))),
+                    ),
                   )
                 ],
               )

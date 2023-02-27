@@ -287,69 +287,72 @@ class _LoginScreenState extends State<LoginScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25),
       width: double.infinity,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          // backgroundColor: Colors.white,
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10))),
-          backgroundColor: const Color.fromARGB(255, 127, 7, 148),
-          padding: const EdgeInsets.all(25),
-          shadowColor: Colors.white,
-        ),
-        onPressed: () async{
-          if (emailTEC.text == 'adminm' && passwordTEC.text == 'adminm') {
-            print("admin");
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => const Admin()));
-          } else if (emailTEC.text == 'admin' && passwordTEC.text == 'admin') {
-            print("admin");
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => Admin_Web()));
-          } 
-          else{
-            signIn();
-          }
-          
-          var _email = emailTEC.text;
-          var _pass = passwordTEC.text;
-          
-
-          // if(_formKey.currentState!.validate()){
-          //   _formKey.currentState!.save();
-          //   login ? AuthServices.login_fun(email_,password_,context):AuthServices.signupUser(email_,password_,context);
-          // }
-          
-          login_fun(_email,_pass);
-          getName(_email);
-          // LoginFirebase(_email,_pass);
-          // if (_email == 'jenis' && _pass == 'jenis') {
-          //   print("user");
-          //   Navigator.pushReplacement(
-          //       context, MaterialPageRoute(builder: (context) => const as_User()));
-          // } else if (_email == 'adminm' && _pass == 'adminm') {
-          //   print("admin");
-          //   Navigator.pushReplacement(
-          //       context, MaterialPageRoute(builder: (context) => const Admin()));
-          // } else if (_email == 'admin' && _pass == 'admin') {
-          //   print("admin");
-          //   Navigator.pushReplacement(
-          //       context, MaterialPageRoute(builder: (context) => Admin_Web()));
-          // } else {
-          //   print("error");
-          // }
-          print('Login Pressed');
-          //User();
-
-          // Navigator.push(
-          //     context, MaterialPageRoute(builder: (context) => User()));
-        },
-        child: const Text(
-          'LOGIN',
-          style: TextStyle(
-            // color: Colors.purple,
-            color: Color.fromARGB(255, 251, 251, 251),
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+      child: Semantics(
+        label: 'Login',
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            // backgroundColor: Colors.white,
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            backgroundColor: const Color.fromARGB(255, 127, 7, 148),
+            padding: const EdgeInsets.all(25),
+            shadowColor: Colors.white,
+          ),
+          onPressed: () async{
+            if (emailTEC.text == 'adminm' && passwordTEC.text == 'adminm') {
+              print("admin");
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => const Admin()));
+            } else if (emailTEC.text == 'admin' && passwordTEC.text == 'admin') {
+              print("admin");
+              Navigator.pushReplacement(
+                  context, MaterialPageRoute(builder: (context) => Admin_Web()));
+            } 
+            else{
+              signIn();
+            }
+            
+            var _email = emailTEC.text;
+            var _pass = passwordTEC.text;
+            
+      
+            // if(_formKey.currentState!.validate()){
+            //   _formKey.currentState!.save();
+            //   login ? AuthServices.login_fun(email_,password_,context):AuthServices.signupUser(email_,password_,context);
+            // }
+            
+            login_fun(_email,_pass);
+            getName(_email);
+            // LoginFirebase(_email,_pass);
+            // if (_email == 'jenis' && _pass == 'jenis') {
+            //   print("user");
+            //   Navigator.pushReplacement(
+            //       context, MaterialPageRoute(builder: (context) => const as_User()));
+            // } else if (_email == 'adminm' && _pass == 'adminm') {
+            //   print("admin");
+            //   Navigator.pushReplacement(
+            //       context, MaterialPageRoute(builder: (context) => const Admin()));
+            // } else if (_email == 'admin' && _pass == 'admin') {
+            //   print("admin");
+            //   Navigator.pushReplacement(
+            //       context, MaterialPageRoute(builder: (context) => Admin_Web()));
+            // } else {
+            //   print("error");
+            // }
+            print('Login Pressed');
+            //User();
+      
+            // Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => User()));
+          },
+          child: const Text(
+            'LOGIN',
+            style: TextStyle(
+              // color: Colors.purple,
+              color: Color.fromARGB(255, 251, 251, 251),
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),

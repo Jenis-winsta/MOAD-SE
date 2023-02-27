@@ -178,23 +178,35 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     height: 40,
                   ),
                   Text('Name'),
-                  TextFormField(
-                    controller: _nameController,
+                  Semantics(
+                    label: 'Name',
+                    child: TextFormField(
+                      controller: _nameController,
+                    ),
                   ),
                   SizedBox(height: 16.0),
                   Text('ID'),
-                  TextFormField(
-                    controller: _idController,
+                  Semantics(
+                    label: 'Id',
+                    child: TextFormField(
+                      controller: _idController,
+                    ),
                   ),
                   SizedBox(height: 16.0),
                   Text('Mobile'),
-                  TextFormField(
-                    controller: _mobileController,
+                  Semantics(
+                    label: 'Mobile no.',
+                    child: TextFormField(
+                      controller: _mobileController,
+                    ),
                   ),
                   SizedBox(height: 16.0),
                   Text('Email'),
-                  TextFormField(
-                    controller: _emailController,
+                  Semantics(
+                    label: 'Email',
+                    child: TextFormField(
+                      controller: _emailController,
+                    ),
                   ),
                   // autovalidateMode: AutovalidateMode.onUserInteraction,
                   // validator: (value) =>
@@ -209,26 +221,29 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   // ),
                   SizedBox(height: 16.0),
                   Text('Password'),
-                  TextFormField(
-                      controller: _passwordController,
-                      validator: (value) => value != null && value.length < 6
-                          ? 'Enter min 6 characters'
-                          : null,
-                      obscureText: _obscureText,
-                      decoration: InputDecoration(
-                          // labelText: 'Password',
-                          suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureText = !_obscureText;
-                          });
-                        },
-                      ))),
+                  Semantics(
+                    label: 'Password',
+                    child: TextFormField(
+                        controller: _passwordController,
+                        validator: (value) => value != null && value.length < 6
+                            ? 'Enter min 6 characters'
+                            : null,
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                            // labelText: 'Password',
+                            suffixIcon: IconButton(
+                          icon: Icon(
+                            _obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          },
+                        ))),
+                  ),
                   SizedBox(height: 16.0),
                   TextFormField(
                     controller: _bioController,
@@ -243,19 +258,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   Center(
                     child: Column(
                       children: [
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.all(20)),
-                          onPressed: () {
-                            _submitForm();
-                            _createUser();
-                            signUp();
+                        Semantics(
+                          label: 'Register button',
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.all(20)),
+                            onPressed: () {
+                              _submitForm();
+                              _createUser();
+                              signUp();
 
-                            print("pressed : register");
-                          },
-                          child: Text(
-                            'Register',
-                            style: TextStyle(fontSize: 20),
+                              print("pressed : register");
+                            },
+                            child: Text(
+                              'Register',
+                              style: TextStyle(fontSize: 20),
+                            ),
                           ),
                         ),
                         SizedBox(

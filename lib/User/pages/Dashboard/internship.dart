@@ -248,7 +248,6 @@ class InternshipDetailsPage extends StatelessWidget {
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 class Internship extends StatelessWidget {
   const Internship({super.key});
 
@@ -262,8 +261,6 @@ class Internship extends StatelessWidget {
     );
   }
 }
-
-
 
 class InternshipList extends StatefulWidget {
   @override
@@ -300,10 +297,10 @@ class _InternshipListState extends State<InternshipList> {
         itemCount: _documentList.length,
         itemBuilder: (BuildContext context, int index) {
           DocumentSnapshot document = _documentList[index];
-          Map<String, dynamic> data = document.data() as Map<String, dynamic>; 
+          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
           return ListTile(
             leading: Icon(Icons.work),
-            title: Text(data['title']?? 'No title available'),
+            title: Text(data['title'] ?? 'No title available'),
             subtitle: Text(data['details']),
             onTap: () {
               Navigator.push(
@@ -327,10 +324,10 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, dynamic> data = document.data()as Map<String, dynamic>;
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
-        title: Text(data['title']?? 'No title available'),
+        title: Text(data['title'] ?? 'No title available'),
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
@@ -339,17 +336,19 @@ class DetailsPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Job title:"+data['title'],
+                "Job title:" + data['title'],
                 style: TextStyle(fontSize: 20.0),
               ),
               SizedBox(height: 16.0),
               Text(
-                "Details: "+data['details'],
+                "Details: " + data['details'],
                 style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(height: 16.0,),
+              SizedBox(
+                height: 16.0,
+              ),
               Text(
-                "Description: "+data['description'],
+                "Description: " + data['description'],
                 style: TextStyle(fontSize: 18.0),
               ),
               SizedBox(height: 16.0),
@@ -359,7 +358,9 @@ class DetailsPage extends StatelessWidget {
               ),
               SizedBox(height: 8.0),
               Container(
-                  margin: EdgeInsets.all(90),
+                margin: EdgeInsets.all(90),
+                child: Semantics(
+                  label: 'Apply button',
                   child: ElevatedButton(
                     // ignore: sort_child_properties_last
                     child: const Text(
@@ -373,10 +374,20 @@ class DetailsPage extends StatelessWidget {
                       primary: Colors.green,
                       padding: EdgeInsets.all(18),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Applied successfully"),
+                          behavior: SnackBarBehavior.floating,
+                          margin:
+                              EdgeInsets.only(top: 60.0, left: 20.0, right: 20.0),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    },
                   ),
                 ),
-              
+              ),
             ],
           ),
         ),

@@ -116,11 +116,11 @@ class _NotificationPageState extends State<NotificationPage> {
   void initState() {
     super.initState();
     _loadData();
-    DocumentReference copyFrom =
-        FirebaseFirestore.instance.collection('internship').doc('204');
-    DocumentReference copyTo =
-        FirebaseFirestore.instance.collection('notifications').doc('204');
-    copyFrom.get().then((value) => {copyTo.set(value.data())});
+    // DocumentReference copyFrom =
+    //     FirebaseFirestore.instance.collection('internship').doc('204');
+    // DocumentReference copyTo =
+    //     FirebaseFirestore.instance.collection('notifications').doc('204');
+    // copyFrom.get().then((value) => {copyTo.set(value.data())});
   }
 
   void _loadData() {
@@ -206,20 +206,33 @@ class DetailsPage extends StatelessWidget {
                 Center(
                   child: Container(
                     margin: EdgeInsets.all(70),
-                    child: ElevatedButton(
-                      // ignore: sort_child_properties_last
-                      child: const Text(
-                        'Apply',
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            color: Colors.white,
-                            fontStyle: FontStyle.normal),
+                    child: Semantics(
+                      label: "Apply button",
+                      child: ElevatedButton(
+                        // ignore: sort_child_properties_last
+                        child: const Text(
+                          'Apply',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.white,
+                              fontStyle: FontStyle.normal),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          padding: EdgeInsets.all(18),
+                        ),
+                        onPressed: () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text("Applied successfully"),
+                              behavior: SnackBarBehavior.floating,
+                              margin: EdgeInsets.only(
+                                  top: 60.0, left: 20.0, right: 20.0),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        },
                       ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.green,
-                        padding: EdgeInsets.all(18),
-                      ),
-                      onPressed: () {},
                     ),
                   ),
                 ),

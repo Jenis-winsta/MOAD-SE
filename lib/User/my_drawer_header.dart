@@ -65,8 +65,6 @@ class _MyHeaderDrawerState extends State<MyHeaderDrawer> {
           // ignore: prefer_const_constructors
           decoration: BoxDecoration(
               shape: BoxShape.circle,
-              //see the changes in the network image
-              //do a different way for profile image
               image: const DecorationImage(
                   // image: AssetImage('assets/girl.png'),
                   // image: AssetImage('assets/user.png'),

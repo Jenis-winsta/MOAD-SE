@@ -60,74 +60,86 @@ class _FeedbackPageState extends State<FeedbackPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                labelStyle: TextStyle(
-                  color: Colors.grey,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.purple.shade900,
-                    width: 2,
+            Semantics(
+              label: 'Name',
+              child: TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                  labelText: 'Name',
+                  labelStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.purple.shade900,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.purple.shade700,
+                    ),
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.purple.shade700,
-                  ),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
                 ),
-              ),
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
               ),
             ),
             const SizedBox(height: 16.0),
-            TextField(
-              controller: _feedbackController,
-              maxLines: 5,
-              decoration: InputDecoration(
-                labelText: 'Feedback',
-                labelStyle: TextStyle(
-                  color: Colors.grey,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.purple.shade900,
-                    width: 2,
+            Semantics(
+              label: 'Feedback field',
+              child: TextField(
+                controller: _feedbackController,
+                maxLines: 5,
+                decoration: InputDecoration(
+                  labelText: 'Feedback',
+                  labelStyle: TextStyle(
+                    color: Colors.grey,
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.purple.shade900,
+                      width: 2,
+                    ),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.purple.shade700,
+                    ),
                   ),
                 ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.purple.shade700,
-                  ),
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black,
                 ),
-              ),
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.black,
               ),
             ),
             const SizedBox(height: 16.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                ElevatedButton(
-                  onPressed: () {
-                    _nameController.text = "";
-                    _feedbackController.text = "";
-                  },
-                  child: const Text('Cancel'),
-                  style:
-                      ElevatedButton.styleFrom(primary: Colors.purple.shade700),
+                Semantics(
+                  label: 'Cancel',
+                  child: ElevatedButton(
+                    onPressed: () {
+                      _nameController.text = "";
+                      _feedbackController.text = "";
+                    },
+                    child: const Text('Cancel'),
+                    style:
+                        ElevatedButton.styleFrom(primary: Colors.purple.shade700),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: _sendFeedback,
-                  child: const Text('Send'),
-                  style:
-                      ElevatedButton.styleFrom(primary: Colors.purple.shade700),
+                Semantics(
+                  label: 'Send feedback',
+                  child: ElevatedButton(
+                    onPressed: _sendFeedback,
+                    child: const Text('Send'),
+                    style:
+                        ElevatedButton.styleFrom(primary: Colors.purple.shade700),
+                  ),
                 ),
               ],
             ),
