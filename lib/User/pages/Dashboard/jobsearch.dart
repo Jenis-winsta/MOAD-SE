@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JobSearch extends StatelessWidget {
   const JobSearch({super.key});
@@ -9,119 +10,167 @@ class JobSearch extends StatelessWidget {
       appBar: AppBar(
         title: Text("Job Search"),
       ),
-      body: SearchPage(),
+      body: JVacancyList(),
     );
   }
 }
 
-class SearchData {
-  final int vid;
-  final String title;
-  final String subtitle;
-  final String description;
-
-  SearchData(this.vid, this.title, this.subtitle, this.description);
-}
-
-final List<SearchData> searchDataList = [
-  SearchData(1, 'Title 1', 'Subtitle 1', 'Description 1'),
-  SearchData(2, 'Title 2', 'Subtitle 2', 'Description 2'),
-  SearchData(3, 'Title 3', 'Subtitle 3', 'Description 3'),
-];
-
-class SearchPage extends StatefulWidget {
+class JVacancyList extends StatefulWidget {
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _JVacancyListState createState() => _JVacancyListState();
 }
 
-class _SearchPageState extends State<SearchPage> {
-  String searchText = '';
+class _JVacancyListState extends State<JVacancyList> {
+  List<DocumentSnapshot> _documentList = [];
+  List<DocumentSnapshot> _searchedDocumentList = [];
+
+  final CollectionReference _collectionReference =
+      FirebaseFirestore.instance.collection('job_search');
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  void _loadData() async {
+    _collectionReference.get().then((QuerySnapshot querySnapshot) {
+      setState(() {
+        _documentList = querySnapshot.docs;
+        _searchedDocumentList = querySnapshot.docs;
+      });
+    });
+  }
+
+  void _runSearch(String searchText) {
+    if (searchText.isEmpty) {
+      setState(() {
+        _searchedDocumentList = List.from(_documentList);
+      });
+      return;
+    }
+    List<DocumentSnapshot> tempList = [];
+    _documentList.forEach((DocumentSnapshot document) {
+      Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+      String title = data['title'].toString().toLowerCase();
+      String subtitle = data['details'].toString().toLowerCase();
+      // String description = data['description'].toString().toLowerCase();  || description.contains(searchText.toLowerCase())
+      if (title.contains(searchText.toLowerCase()) ||
+          subtitle.contains(searchText.toLowerCase())) {
+        tempList.add(document);
+      }
+    });
+    setState(() {
+      _searchedDocumentList = tempList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final filteredList = searchText.isEmpty ? searchDataList : searchDataList.where((searchData) =>
-        searchData.title.toLowerCase().contains(searchText.toLowerCase()) ||
-        searchData.subtitle.toLowerCase().contains(searchText.toLowerCase()) ||
-        searchData.description.toLowerCase().contains(searchText.toLowerCase())).toList();
-
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Search'),
-      // ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(8.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search...',
-              ),
-              onChanged: (text) {
-                setState(() {
-                  searchText = text;
-                });
-              },
-            ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: TextField(
+          decoration: InputDecoration(
+            hintText: "Search...",
+            hintStyle: TextStyle(color: Colors.grey),
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: filteredList.length,
-              itemBuilder: (BuildContext context, int index) {
-                final searchData = filteredList[index];
-                return ListTile(
-                  title: Text(searchData.title),
-                  subtitle: Text(searchData.subtitle),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DetailsPage(searchData: searchData)),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+          onChanged: (String searchText) {
+            _runSearch(searchText);
+          },
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+      body: ListView.builder(
+        itemCount: _searchedDocumentList.length,
+        itemBuilder: (BuildContext context, int index) {
+          DocumentSnapshot document = _searchedDocumentList[index];
+          Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+          return ListTile(
+            leading: Icon(Icons.work),
+            title: Text(data['title']),
+            subtitle: Text(data['details']),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailsPage(document: document),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
 }
 
 class DetailsPage extends StatelessWidget {
-  final SearchData searchData;
+  final DocumentSnapshot document;
 
-  const DetailsPage({Key? key, required this.searchData}) : super(key: key);
+  DetailsPage({required this.document});
 
   @override
   Widget build(BuildContext context) {
+    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     return Scaffold(
       appBar: AppBar(
-        title: Text(searchData.title),
+        title: Text(data['title']),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(searchData.subtitle),
-            Text(searchData.description),
-          ],
+      body: Container(
+        padding: EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Job title:" + data['title'],
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Details: " + data['details'],
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Text(
+                  "Description: " + data['description'],
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'V ID: ${data['vid']}',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(height: 8.0),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.all(70),
+                    child: ElevatedButton(
+                      // ignore: sort_child_properties_last
+                      child: const Text(
+                        'Apply',
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                            fontStyle: FontStyle.normal),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.green,
+                        padding: EdgeInsets.all(18),
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 }
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SearchPage(),
-    );
-  }
-}
-
-

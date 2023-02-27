@@ -358,6 +358,24 @@ class DetailsPage extends StatelessWidget {
                 style: TextStyle(fontSize: 16.0),
               ),
               SizedBox(height: 8.0),
+              Container(
+                  margin: EdgeInsets.all(90),
+                  child: ElevatedButton(
+                    // ignore: sort_child_properties_last
+                    child: const Text(
+                      'Apply',
+                      style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                          fontStyle: FontStyle.normal),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                      padding: EdgeInsets.all(18),
+                    ),
+                    onPressed: () {},
+                  ),
+                ),
               
             ],
           ),

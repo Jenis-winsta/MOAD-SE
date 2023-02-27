@@ -197,31 +197,55 @@ class DetailsPage extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Job title:"+data['title'],
-              style: TextStyle(fontSize: 20.0),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Job title:"+data['title'],
+                  style: TextStyle(fontSize: 20.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  "Details: "+data['details'],
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(height: 16.0,),
+                Text(
+                  "Description: "+data['description'],
+                  style: TextStyle(fontSize: 18.0),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'V ID: ${data['vid']}',
+                  style: TextStyle(fontSize: 16.0),
+                ),
+                SizedBox(height: 8.0),
+                Center(
+                  child: Container(
+                        margin: EdgeInsets.all(70),
+                        child: ElevatedButton(
+                          // ignore: sort_child_properties_last
+                          child: const Text(
+                            'Apply',
+                            style: TextStyle(
+                                fontSize: 20.0,
+                                color: Colors.white,
+                                fontStyle: FontStyle.normal),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.green,
+                            padding: EdgeInsets.all(18),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                ),
+                
+              ],
             ),
-            SizedBox(height: 16.0),
-            Text(
-              "Details: "+data['details'],
-              style: TextStyle(fontSize: 16.0),
-            ),
-            SizedBox(height: 16.0,),
-            Text(
-              "Description: "+data['description'],
-              style: TextStyle(fontSize: 18.0),
-            ),
-            SizedBox(height: 16.0),
-            Text(
-              'V ID: ${data['vid']}',
-              style: TextStyle(fontSize: 16.0),
-            ),
-            SizedBox(height: 8.0),
-            
-          ],
+          ),
         ),
       ),
     );
