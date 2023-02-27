@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:finalapp/LoginScreen/authpage.dart';
-import 'package:finalapp/LoginScreen/login.dart';
 import 'package:finalapp/main.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -50,6 +48,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final _emailController = TextEditingController();
   // final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
+  final TextEditingController _bioController = TextEditingController();
 
   void _submitForm() {
     // if (_formKey.currentState.validate()) {
@@ -61,12 +60,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
       String email = _emailController.text.trim();
       // String username = _usernameController.text.trim();
       String password = _passwordController.text.trim();
+      String bio = _bioController.text.trim();
       print('Name: $name');
       print('ID: $id');
       print('Mobile: $mobile');
       print('Email: $email');
       // print('Username: $username');
       print('Password: $password');
+      print('BIO: $bio');
     }
 
     // }
@@ -99,13 +100,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _createUser() {
-    
     String name = _nameController.text.trim();
     String id = _idController.text.trim();
     String mobile = _mobileController.text.trim();
     String email = _emailController.text.trim();
     // String username = _usernameController.text.trim();
     String password = _passwordController.text.trim();
+    String bio = _bioController.text.trim();
 
     DocumentReference documentReference =
         FirebaseFirestore.instance.collection("user").doc(email);
@@ -117,6 +118,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       "mobile": mobile,
       "email": email,
       "password": password,
+      "Bio": bio,
     };
     documentReference.set(userinfo).whenComplete(() {
       if (kDebugMode) {
@@ -193,12 +195,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   Text('Email'),
                   TextFormField(
                     controller: _emailController,
-                    // autovalidateMode: AutovalidateMode.onUserInteraction,
-                    // validator: (value) =>
-                    //     value != null
-                    //         ? 'Enter a valid email'
-                    //         : null,
                   ),
+                  // autovalidateMode: AutovalidateMode.onUserInteraction,
+                  // validator: (value) =>
+                  //     value != null
+                  //         ? 'Enter a valid email'
+                  //         : null,
+
                   // SizedBox(height: 16.0),
                   // Text('Username'),
                   // TextFormField(
@@ -226,6 +229,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           });
                         },
                       ))),
+                  SizedBox(height: 16.0),
+                  TextFormField(
+                    controller: _bioController,
+                    decoration: InputDecoration(
+                      labelText: 'Bio',
+                      alignLabelWithHint: true,
+                    ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: 5,
+                  ),
                   SizedBox(height: 32.0),
                   Center(
                     child: Column(
