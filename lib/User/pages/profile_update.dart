@@ -153,7 +153,8 @@ class _EditProfileUIState extends State<EditProfileUI> {
                             shape: BoxShape.circle,
                             image: const DecorationImage(
                               fit: BoxFit.cover,
-                              image: AssetImage('assets/male.jpg'),
+                              // image: AssetImage('assets/male.jpg'),
+                              image:AssetImage('assets/girl.png'),
                             ))),
                   ],
                 ),

@@ -173,7 +173,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               key: formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: [const
                   SizedBox(
                     height: 40,
                   ),

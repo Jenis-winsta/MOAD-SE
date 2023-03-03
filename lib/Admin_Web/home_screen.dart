@@ -5,6 +5,7 @@ import 'package:finalapp/Admin_Web/pages/logout.dart';
 import 'package:finalapp/Admin_Web/pages/massEmail.dart';
 import 'package:finalapp/Admin_Web/pages/reportsAnalysis.dart';
 import 'package:finalapp/Admin_Web/pages/sendNotification.dart';
+import 'package:finalapp/LoginScreen/authpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_admin_scaffold/admin_scaffold.dart';
 
@@ -52,7 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
       case LogoutPage.id: 
         setState(() {
-          _selectedScreen= LogoutPage();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => AuthPage()));
+          // _selectedScreen= LogoutPage();
         });
         break;
 
